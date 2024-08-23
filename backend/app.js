@@ -1,4 +1,6 @@
 const express = require("express");
+const dotenv = require("dotenv")
+dotenv.config()
 const mongoose = require("mongoose");
 const cors = require("cors");
 const userRouter = require("./routes/userRouter");
@@ -9,7 +11,7 @@ const app = express();
 
 //!Connect to mongodb
 mongoose
-  .connect("mongodb://localhost:27017/mern-expenses")
+  .connect(process.env.MONGO_URL)
   .then(() => console.log("DB Connected"))
   .catch((e) => console.log(e));
 
