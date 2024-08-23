@@ -16,10 +16,19 @@ mongoose
   .catch((e) => console.log(e));
 
 //! Cors config
-const corsOptions = {
-  origin: ["https://monerchy.vercel.app"],
-};
-app.use(cors(corsOptions));
+const allowedOrigins = ["https://monerchy.vercel.app"]
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true)
+
+        if (!allowedOrigins.includes(origin)) {
+            const err = new Error('CORS wahala 😂😂')
+            return callback(err, false)
+        }
+
+        return callback(null, true)
+    }, credentials: true
+}));
 //!Middlewares
 app.use(express.json()); //?Pass incoming json data
 //!Routes
